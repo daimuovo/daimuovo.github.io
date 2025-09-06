@@ -12,8 +12,10 @@
   <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
   {%- feed_meta -%}
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
-  {%- include extensions/google-analytics.html -%}
+    {%- include google-analytics.html -%}
   {%- endif -%}
+  <!-- 不蒜子网站流量统计 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
   {%- include extensions/code-highlight.html -%}
   {%- include extensions/photo-swipe.html -%}
   {%- include custom-head.html -%}
