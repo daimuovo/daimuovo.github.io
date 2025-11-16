@@ -3158,6 +3158,131 @@ details summary {
 details p {
   margin: 8px 0;
 }
+/* 图片画廊样式 */
+.trm-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+.trm-gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+.trm-gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.trm-gallery-item:hover .trm-gallery-overlay {
+  opacity: 1;
+}
+.trm-gallery-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.trm-gallery-item:hover img {
+  transform: scale(1.05);
+}
+.trm-gallery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 15px;
+  text-align: center;
+}
+.trm-gallery-overlay h3 {
+  color: #fff;
+  margin-bottom: 5px;
+  font-size: 1.1em;
+}
+.trm-gallery-overlay p {
+  color: #ccc;
+  font-size: 0.9em;
+}
+/* 图片详情页样式 */
+.trm-photo-full {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.trm-photo-full img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.trm-photo-info .trm-photo-title {
+  font-size: 2em;
+  margin-bottom: 15px;
+}
+.trm-photo-info .trm-label {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.trm-photo-info .trm-category a {
+  background: var(--theme-color);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+.trm-photo-info .trm-list {
+  list-style: none;
+  padding: 0;
+}
+.trm-photo-info .trm-list li {
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+.trm-photo-info .trm-list li:before {
+  content: "•";
+  color: var(--theme-color);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.trm-photo-details {
+  margin-top: 20px;
+}
+.trm-copyright-info {
+  background: #f8f9fa;
+  padding: 15px;
+  border-left: 3px solid var(--theme-color);
+  border-radius: 5px;
+}
+.trm-copyright-info p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9em;
+}
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .trm-gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  .trm-photo-full img {
+    border-radius: 5px;
+  }
+  .trm-photo-info .trm-photo-title {
+    font-size: 1.5em;
+  }
+}
 .fancybox-slide--video .fancybox__content {
   max-width: 80% !important;
   max-height: 80% !important;
