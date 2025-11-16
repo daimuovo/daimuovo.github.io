@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="介绍 123456789101112131415161718192021# WRF模式依赖库版本信息# 这些库是WRF模式运行的基础依赖# 并行计算库mpich-3.0.4      # MPI并行计算库，用于分布式内存并行openmpi-3.0.0    # OpenMPI并行计算库，MPICH的替代方案# 压缩和图像处理库zlib-1.2.7       # 数据压缩库libpng-1.2.5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WRF基础 | WRF库的安装">
+<meta property="og:url" content="http://example.com/2025/11/05/WRF%E5%9F%BA%E7%A1%80%20_%20WRF%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="Damu">
+<meta property="og:description" content="介绍 123456789101112131415161718192021# WRF模式依赖库版本信息# 这些库是WRF模式运行的基础依赖# 并行计算库mpich-3.0.4      # MPI并行计算库，用于分布式内存并行openmpi-3.0.0    # OpenMPI并行计算库，MPICH的替代方案# 压缩和图像处理库zlib-1.2.7       # 数据压缩库libpng-1.2.5">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/wrf.png">
+<meta property="article:published_time" content="2025-11-05T14:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-16T16:25:24.269Z">
+<meta property="article:author" content="Damu">
+<meta property="article:tag" content="WRF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/wrf.png">
+
+
+<title >WRF基础 | WRF库的安装</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.jpg?v=2.2.6' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.jpg?v=2.2.6' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Damu","root":"/","typed_text":null,"theme_version":"2.2.6","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.jpg","icon16":"/img/favicon.jpg","icon32":"/img/favicon.jpg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-11-17 00:25:24"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.6" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 8.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.jpg">
+    
+    
+        <div class="trm-logo-text">
+            沐室<span></span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/categories/" target="">
+                    分类
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/gallery/" target="">
+                    图片
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/home.jpeg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            WRF基础 | WRF库的安装
+                        </h1>
+
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/img/favicon.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        Daimu
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Mars
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            11/05
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            22:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            Damu
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <p><strong>介绍</strong></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># WRF模式依赖库版本信息</span></span><br><span class="line"><span class="comment"># 这些库是WRF模式运行的基础依赖</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 并行计算库</span></span><br><span class="line">mpich-<span class="number">3.0</span><span class="number">.4</span>      <span class="comment"># MPI并行计算库，用于分布式内存并行</span></span><br><span class="line">openmpi-<span class="number">3.0</span><span class="number">.0</span>    <span class="comment"># OpenMPI并行计算库，MPICH的替代方案</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 压缩和图像处理库</span></span><br><span class="line">zlib-<span class="number">1.2</span><span class="number">.7</span>       <span class="comment"># 数据压缩库</span></span><br><span class="line">libpng-<span class="number">1.2</span><span class="number">.50</span>    <span class="comment"># PNG图像处理库</span></span><br><span class="line">jasper-<span class="number">1.900</span><span class="number">.1</span>   <span class="comment"># JPEG-2000图像压缩库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 科学数据格式库</span></span><br><span class="line">hdf5-<span class="number">1.10</span><span class="number">.5</span>          <span class="comment"># 层次化数据格式第5版</span></span><br><span class="line">netcdf-c-<span class="number">4.8</span><span class="number">.1</span>       <span class="comment"># NetCDF C接口库</span></span><br><span class="line">netcdf-fortran-<span class="number">4.5</span><span class="number">.4</span> <span class="comment"># NetCDF Fortran接口库</span></span><br><span class="line">netcdf-cxx4-<span class="number">4.3</span><span class="number">.1</span>    <span class="comment"># NetCDF C++接口库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译器版本要求</span></span><br><span class="line"><span class="comment"># 编译器使用的是GNU编译器套件</span></span><br><span class="line">gfortran的版本最好不要高于<span class="number">7</span>，因为Fortran <span class="number">7</span>以上版本中iand函数的定义发生变化，可能会导致intmath错误</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 文件所用脚本</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line"># gfortran是Fortran 95 编译器，支持Fortran95和一部分Fortran2003的功能</span><br><span class="line">which gfortran</span><br><span class="line"># /usr/bin/gcc</span><br><span class="line">which cpp</span><br><span class="line"># /usr/bin/cpp</span><br><span class="line"># gcc是GCC中的GUN C Compiler（C 编译器）</span><br><span class="line">which gcc</span><br><span class="line"># /usr/bin/gcc</span><br><span class="line"># 查看gcc版本</span><br><span class="line">gcc --version</span><br><span class="line"># gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-44)</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">系统初始编译器配置</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">yum install gcc</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">yum install cpp gcc-c++</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">yum install gcc-gfortran</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">yum install unzip bzip2 <span class="keyword">time</span> nfs-utils perl tcsh wget m4 mlocate.x86_64 libX11-devel.x86_64 libXext-devel.x86_64 libXrender-devel.x86_64 fontconfig-devel.x86_64 curl-devel cmake subversion</span></span><br><span class="line"></span><br><span class="line">source libraries.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mpich-3.0.4</span></span><br><span class="line">tar xzvf mpich-3.0.4.tar.gz</span><br><span class="line">cd mpich-3.0.4</span><br><span class="line">./configure --prefix=$DIR/mpich</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cd ..</span><br><span class="line">rm -rf mpich-3.0.4</span><br><span class="line">source libraries.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">zlib-1.2.7</span></span><br><span class="line">tar xzvf zlib-1.2.7.tar.gz</span><br><span class="line">cd zlib-1.2.7</span><br><span class="line">./configure --prefix=$DIR/grib2</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cd ..</span><br><span class="line">rm -rf zlib-1.2.7</span><br><span class="line">source libraries.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">libpng-1.2.50</span></span><br><span class="line">tar xzvf libpng-1.2.50.tar.gz</span><br><span class="line">cd libpng-1.2.50</span><br><span class="line">./configure --prefix=$DIR/grib2</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cd ..</span><br><span class="line">rm -rf libpng-1.2.50</span><br><span class="line">source libraries.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">jasper-1.900.1</span></span><br><span class="line">tar xzvf jasper-1.900.1.tar.gz</span><br><span class="line">cd jasper-1.900.1</span><br><span class="line">./configure --prefix=$DIR/grib2</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cd ..</span><br><span class="line">rm -rf jasper-1.900.1</span><br><span class="line">source libraries.sh</span><br><span class="line"></span><br><span class="line">tar xzvf zlib-1.2.7.tar.gz</span><br><span class="line">cd zlib-1.2.7</span><br><span class="line">./configure --prefix=$DIR/hdf5</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cd ..</span><br><span class="line">rm -rf zlib-1.2.7</span><br><span class="line">source libraries.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">hdf5-1.10.5</span></span><br><span class="line">tar xzvf hdf5-1.10.5.tar.gz</span><br><span class="line">cd hdf5-1.10.5/</span><br><span class="line">./configure --prefix=$DIR/hdf5 --with-zlib=$DIR/hdf5</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cd ..</span><br><span class="line">rm -rf hdf5-1.10.5</span><br><span class="line">source libraries.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">netcdf-c-4.8.1</span></span><br><span class="line">unzip netcdf-c-4.8.1.zip</span><br><span class="line">cd netcdf-c-4.8.1/</span><br><span class="line">CPPFLAGS="-I$DIR/hdf5/include" LDFLAGS="-L$DIR/hdf5/lib" ./configure --prefix=$DIR/netcdf --enable-netcdf-4 --enable-netcdf4 --enable-shared --disable-dap</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cd ..</span><br><span class="line">rm -rf netcdf-c-4.8.1</span><br><span class="line">source libraries.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">netcdf-fortran-4.5.4</span></span><br><span class="line">unzip netcdf-fortran-4.5.4.zip</span><br><span class="line">cd netcdf-fortran-4.5.4/</span><br><span class="line">CPPFLAGS="-I$DIR/netcdf/include" LDFLAGS="-L$DIR/netcdf/lib" ./configure --prefix=$DIR/netcdf</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cd ..</span><br><span class="line">rm -rf netcdf-fortran-4.5.4</span><br><span class="line">source libraries.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">netcdf-cxx4-4.3.1</span></span><br><span class="line">unzip netcdf-cxx4-4.3.1.zip</span><br><span class="line">cd netcdf-cxx4-4.3.1/</span><br><span class="line">CPPFLAGS="-I$DIR/hdf5/include -I$DIR/netcdf/include" LDFLAGS="-L$DIR/hdf5/lib -L$DIR/netcdf/lib" ./configure --prefix=$DIR/netcdf</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cd ..</span><br><span class="line">rm -rf netcdf-cxx4-4.3.1</span><br><span class="line">source libraries.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">openmpi-3.0.0</span></span><br><span class="line">tar xzvf openmpi-3.0.0.tar.tar</span><br><span class="line">cd openmpi-3.0.0</span><br><span class="line">./configure --prefix=$DIR/openmpi3.0.0</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cd ..</span><br><span class="line">rm -rf openmpi-3.0.0</span><br><span class="line">source libraries.sh</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">WRF依赖库环境变量配置脚本</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意：使用前请修改路径为实际安装路径</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建库文件存储目录</span></span><br><span class="line">if [ ! -d "/home/daimu/Desktop/LIBRARIES" ];then</span><br><span class="line">  mkdir /home/daimu/Desktop/LIBRARIES</span><br><span class="line">else</span><br><span class="line">  echo "文件夹已经存在"</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置基础编译器环境变量</span></span><br><span class="line">export DIR=/home//LIBRARIES</span><br><span class="line">export CC=gcc        # C编译器</span><br><span class="line">export CXX=g++       # C++编译器</span><br><span class="line">export FC=gfortran   # Fortran编译器</span><br><span class="line">export CFLAGS=-m64   # C编译器标志</span><br><span class="line">export F77=gfortran  # Fortran77编译器</span><br><span class="line">export FFLAGS=-m64   # Fortran编译器标志</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">MPI环境变量设置</span></span><br><span class="line">export PATH=$DIR/mpich/bin:$PATH</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">zlib、libpng、jasper库路径设置</span></span><br><span class="line">export LDFLAGS=-L$DIR/grib2/lib</span><br><span class="line">export CPPFLAGS=-I$DIR/grib2/include</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">HDF5库环境变量</span></span><br><span class="line">export LD_LIBRARY_PATH=$DIR/hdf5/lib:$LD_LIBRARY_PATH</span><br><span class="line">export PATH=$DIR/hdf5/bin:$PATH</span><br><span class="line">export HDF5_HOME=$DIR/hdf5</span><br><span class="line">export HDF5_INCDIR=$HDF5_HOME/include</span><br><span class="line">export HDF5_LIBDIR=$HDF5_HOME/lib</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## netcdf</span></span></span><br><span class="line">export PATH=$DIR/netcdf/bin:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=$DIR/netcdf/lib:$LD_LIBRARY_PATH</span><br><span class="line">export NETCDF=$DIR/netcdf</span><br><span class="line">export NETCDF_INC=$NETCDF/include</span><br><span class="line">export NETCDF_LIB=$NETCDF/lib</span><br><span class="line">export NETCDF_INCDIR=$NETCDF/include</span><br><span class="line">export NETCDF_LIBDIR=$NETCDF/lib</span><br><span class="line">export NETCDFPATH=$NETCDF</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## openmpi</span></span></span><br><span class="line">MPI_HOME=$DIR/openmpi3.0.0</span><br><span class="line">export PATH=${MPI_HOME}/bin:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=${MPI_HOME}/lib:$LD_LIBRARY_PATH</span><br><span class="line">export MANPATH=${MPI_HOME}/share/man:$MANPATH</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<hr>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">source /opt/intel2018/<span class="built_in">bin</span>/compilervars.sh intel64</span><br><span class="line"></span><br><span class="line">export DIR=/home/deepin/data/wmj/Daimu/LIBRARIES_intel2</span><br><span class="line">export CC=icc</span><br><span class="line">export CXX=icpc</span><br><span class="line">export FC=ifort</span><br><span class="line">export CFLAGS=<span class="string">'-O3 -xHost -ip -no-prec-div -static-intel'</span></span><br><span class="line">export F77=ifort</span><br><span class="line">export FFLAGS=<span class="string">'-O3 -xHost -ip -no-prec-div -static-intel'</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Ps: 编译器和库测试</strong></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www2.mmm.ucar.edu/wrf/OnLineTutorial/compilation_tutorial.php">Compiling WRF (ucar.edu)</a></p>
+<h2 id="MPI和OpenMPI"><a href="#MPI和OpenMPI" class="headerlink" title="MPI和OpenMPI"></a>MPI和OpenMPI</h2><h3 id="编译时的选择"><a href="#编译时的选择" class="headerlink" title="编译时的选择"></a>编译时的选择</h3><p><strong>serial </strong>表示串行计算；<br><strong>smpar </strong>表示内存共享并行计算(shared memory option)，即使用openMP，大部分多核电脑都支持这项功能；<br><strong>dmpar</strong> 表示分布式并行计算(distributed memory option)，即<strong>使用MPI 进行并行计算</strong>，主要用在计算集群，单个电脑就没必要用了；<br><strong>dm+sm </strong>表示同时使用openMP与MPI两种并行方式.</p>
+<h3 id="mpich和openmpi的区别"><a href="#mpich和openmpi的区别" class="headerlink" title="mpich和openmpi的区别"></a>mpich和openmpi的区别</h3><p>openmpi是共享式内存结构上的并行计算，就是一台服务器上的多个线程的并行计算</p>
+<p>mpich则是分布式内存结构的并行计算，由很多个服务器共同并行计算，是塔式结构。</p>
+<p>上述两种并行库对模型计算有影响吗？当然是有的。WRF中的AFWA模块主要是用来诊断降水，极端天气，能见度，水汽，冰，云，热，湍流等的一些变量。如果需要打开这个模块，那么需要保证并行库是mpich的，否则会报错。</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2025/11/05/WRF%E5%9F%BA%E7%A1%80%20_%20%E5%A6%82%E4%BD%95%E6%A8%A1%E6%8B%9F%E5%87%BA%E6%9B%B4%E5%A5%BD%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%9F/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/wrf-model-range.png">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/WRF/">
+                    WRF
+                </a>
+            </div>
+            <h5>
+                <a href="/2025/11/05/WRF%E5%9F%BA%E7%A1%80%20_%20%E5%A6%82%E4%BD%95%E6%A8%A1%E6%8B%9F%E5%87%BA%E6%9B%B4%E5%A5%BD%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%9F/" class="trm-anima-link">
+                    WRF基础 | 如何模拟出更好的结果？
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/11/05</li>
+                <li>22:00</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2025/11/05/WRF%E5%9F%BA%E7%A1%80%20_%20WRF%E7%9A%84%E5%AE%89%E8%A3%85/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/wrf.png">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/WRF/">
+                    WRF
+                </a>
+            </div>
+            <h5>
+                <a href="/2025/11/05/WRF%E5%9F%BA%E7%A1%80%20_%20WRF%E7%9A%84%E5%AE%89%E8%A3%85/" class="trm-anima-link">
+                    WRF基础 | WRF的安装
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/11/05</li>
+                <li>22:00</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener external nofollow noreferrer">Hexo</a> 驱动 v8.1.1
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                主题 - 
+                <a rel="noopener external nofollow noreferrer" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.2.6
+            </span>
+        </div>
+      
+
+     
+
+    
+        <div class="trm-footer-item">
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div style="margin-top: 10px; text-align: center; font-size: 14px;">
+  <span id="busuanzi_container_site_pv">本站总访问量：<span id="busuanzi_value_site_pv"></span>次</span>
+  <span style="margin: 0 10px;">|</span>
+  <span id="busuanzi_container_site_uv">本站访客数：<span id="busuanzi_value_site_uv"></span>人</span>
+</div>
+
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+            
+<div class="trm-fixed-container">
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.2.6"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>
