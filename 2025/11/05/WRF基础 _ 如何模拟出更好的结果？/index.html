@@ -7,22 +7,23 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta name="description" content="这是一篇全新的用于测试中文显示的文章。在这里我们可以看到正常的中文字体显示效果。 中文标题测试这是正文内容，应该能正常显示中文字符。 更多内容包含各种中文标点符号：，。！？；：””‘’（）【】《》">
+<meta name="description" content="本文引自PPT：https:&#x2F;&#x2F;www2.mmm.ucar.edu&#x2F;wrf&#x2F;users&#x2F;tutorial&#x2F;presentation_pdfs&#x2F;202101&#x2F;chen_better_performance.pdf 如何确定模型范围范围需要多大？ 不要太小，否则结果将由强迫数据决定。 不小于 100×100个网格（至少有 10 个网格点位于边界区域）。  侧边界位置怎么决定？ 避免陡峭的地形。 远离目">
 <meta property="og:type" content="article">
-<meta property="og:title" content="新的中文测试文章">
-<meta property="og:url" content="http://example.com/2025/11/05/new-test-chinese/index.html">
+<meta property="og:title" content="WRF基础 | 如何模拟出更好的结果？">
+<meta property="og:url" content="http://example.com/2025/11/05/WRF%E5%9F%BA%E7%A1%80%20_%20%E5%A6%82%E4%BD%95%E6%A8%A1%E6%8B%9F%E5%87%BA%E6%9B%B4%E5%A5%BD%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Damu">
-<meta property="og:description" content="这是一篇全新的用于测试中文显示的文章。在这里我们可以看到正常的中文字体显示效果。 中文标题测试这是正文内容，应该能正常显示中文字符。 更多内容包含各种中文标点符号：，。！？；：””‘’（）【】《》">
+<meta property="og:description" content="本文引自PPT：https:&#x2F;&#x2F;www2.mmm.ucar.edu&#x2F;wrf&#x2F;users&#x2F;tutorial&#x2F;presentation_pdfs&#x2F;202101&#x2F;chen_better_performance.pdf 如何确定模型范围范围需要多大？ 不要太小，否则结果将由强迫数据决定。 不小于 100×100个网格（至少有 10 个网格点位于边界区域）。  侧边界位置怎么决定？ 避免陡峭的地形。 远离目">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/wrf-model-range.png">
 <meta property="article:published_time" content="2025-11-05T14:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-05T14:10:49.296Z">
+<meta property="article:modified_time" content="2025-11-16T14:02:32.319Z">
 <meta property="article:author" content="Damu">
-<meta property="article:tag" content="中文">
-<meta property="article:tag" content="测试">
+<meta property="article:tag" content="WRF">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/wrf-model-range.png">
 
 
-<title >新的中文测试文章</title>
+<title >WRF基础 | 如何模拟出更好的结果？</title>
 
 <!-- Favicon -->
 
@@ -61,7 +62,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Damu","root":"/","typed_text":null,"theme_version":"2.2.6","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.jpg","icon16":"/img/favicon.jpg","icon32":"/img/favicon.jpg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-11-05 22:10:49"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-11-16 22:02:32"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.6" id="trm-switch-style">
@@ -226,7 +227,7 @@
                             NEWS LETTER
                         </div>
                         <h1 class="trm-mb-30 trm-hsmb-font">
-                            新的中文测试文章
+                            WRF基础 | 如何模拟出更好的结果？
                         </h1>
 
                         
@@ -323,9 +324,83 @@
 </div>
 <div class="trm-card ">
     <article id="article-container" class="trm-publication">
-    <p>这是一篇全新的用于测试中文显示的文章。在这里我们可以看到正常的中文字体显示效果。</p>
-<h2 id="中文标题测试"><a href="#中文标题测试" class="headerlink" title="中文标题测试"></a>中文标题测试</h2><p>这是正文内容，应该能正常显示中文字符。</p>
-<h3 id="更多内容"><a href="#更多内容" class="headerlink" title="更多内容"></a>更多内容</h3><p>包含各种中文标点符号：，。！？；：””‘’（）【】《》</p>
+    <p>本文引自PPT：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www2.mmm.ucar.edu/wrf/users/tutorial/presentation_pdfs/202101/chen_better_performance.pdf">https://www2.mmm.ucar.edu/wrf/users/tutorial/presentation_pdfs/202101/chen_better_performance.pdf</a></p>
+<h1 id="如何确定模型范围"><a href="#如何确定模型范围" class="headerlink" title="如何确定模型范围"></a>如何确定模型范围</h1><h2 id="范围需要多大？"><a href="#范围需要多大？" class="headerlink" title="范围需要多大？"></a>范围需要多大？</h2><ul>
+<li>不要太小，否则结果将由强迫数据决定。</li>
+<li>不小于 100×100个网格（至少有 10 个网格点位于边界区域）。</li>
+</ul>
+<h2 id="侧边界位置怎么决定？"><a href="#侧边界位置怎么决定？" class="headerlink" title="侧边界位置怎么决定？"></a>侧边界位置怎么决定？</h2><ul>
+<li>避免陡峭的地形。</li>
+<li>远离目标区域。</li>
+</ul>
+<p><img src="/img/wrf-model-range.png" alt="WRF模型范围示例"  data-tag='post-image' onload='this.onload=null;this.style.opacity=1;' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p><em>图：WRF模型范围示例 - a) 大区域，b) 小区域</em></p>
+<h1 id="初始化和spin-up过程"><a href="#初始化和spin-up过程" class="headerlink" title="初始化和spin-up过程"></a>初始化和spin-up过程</h1><p>模型问题大多数是由初始场数据差引起的。</p>
+<h2 id="关键考虑因素"><a href="#关键考虑因素" class="headerlink" title="关键考虑因素"></a>关键考虑因素</h2><ul>
+<li><strong>适当的开始时间</strong></li>
+<li><strong>初始场数据的质量</strong><ul>
+<li>检查土地利用数据，它是否很好的代表了您所模拟的区域。</li>
+<li>了解数据的来源：预报数据、再分析数据或者气候模型数据。</li>
+</ul>
+</li>
+<li><strong>spin-up过程</strong>：在最初的几个小时里，压力场会有噪音存在，此时数据不可信。</li>
+</ul>
+<blockquote>
+<p>WRF 的spin-up时间不应该太短，因为很难形成适当的大气环流，但也不能越长越好，因为它取决于初始场数据的质量。关于spin-up过程，可以参考《Developing spin-up time framework for WRF extreme precipitation simulations》提出的OSTI框架进行适当的应用。</p>
+</blockquote>
+<h1 id="侧边界条件"><a href="#侧边界条件" class="headerlink" title="侧边界条件"></a>侧边界条件</h1><p>侧边界可能会产生一些负面的影响，如何减少侧边界的负面影响可以从以下几个方面考虑：</p>
+<ul>
+<li>应避免在侧边界处进行强烈强迫。</li>
+<li>应使用与分辨率一致的输入数据。</li>
+<li>更频繁的更新更好。</li>
+<li>当可能时，应使用交互式边界。</li>
+</ul>
+<h1 id="网格大小"><a href="#网格大小" class="headerlink" title="网格大小"></a>网格大小</h1><ul>
+<li><strong>Δ ≈ 3 公里</strong>：传统的云解析分辨率，无需深对流的积云参数化方案</li>
+<li><strong>100 米 &lt; Δ &lt; 1 公里</strong>：对于大多数情况，仍然需要 PBL 方案，浅积云参数化方案可以关闭（对于 Δ &gt; 500 米 仍然开启）；传输方案：最好使用单调/非振荡选项 (adv_opt ≥ 2 )。</li>
+<li><strong>Δ ≈ 30 米</strong>：传统的 LES 分辨率，无需行星边界层 (PBL) 参数化。湍流涡由模式控制方程（和陆面及次网格湍流方案）处理。</li>
+</ul>
+<h1 id="模式层和顶度"><a href="#模式层和顶度" class="headerlink" title="模式层和顶度"></a>模式层和顶度</h1><ul>
+<li>模型顶层在 50 hPa时，至少需要 30 个或更多层次。</li>
+<li>对于顶附近 1 hPa (45-50 公里)，需要 60 个或更多层次。</li>
+<li>在 30 hPa 以上，臭氧气候学变得很重要，在那里包含了一部分或全部臭氧层，使用 RRTMG 和 CAM</li>
+<li>对于顶层 &lt; 50 hPa，垂直网格距离不应大于 1000 米。</li>
+<li>如果使用更细的水平网格尺寸，则需要在垂直方向上使用更多层次。</li>
+<li>确保 dz &lt; dx。</li>
+</ul>
+<h1 id="复杂地形"><a href="#复杂地形" class="headerlink" title="复杂地形"></a>复杂地形</h1><p>陡峭地形（&gt; 45 度）可能会导致数值稳定性问题，考虑以下解决办法：</p>
+<h2 id="数值稳定性解决方案"><a href="#数值稳定性解决方案" class="headerlink" title="数值稳定性解决方案"></a>数值稳定性解决方案</h2><ul>
+<li><p><strong>增加 epssm（0.1-0.5 或更大）</strong></p>
+<ul>
+<li>这是一个声波阻尼器，可以通过动力学稳定斜率处理。</li>
+<li>在 namelist.input 的 domain 部分设置。</li>
+</ul>
+</li>
+<li><p><strong>对于大坡度，设置 diff_opt=2</strong></p>
+<ul>
+<li>diff_opt=1 比 diff_opt=2 更不真实，diff_opt=2 曾经不稳定，但在最新版本中变得更稳定。</li>
+<li>对于 V3.6 及更高版本，diff_opt=2 和 km_opt=4 可以一起使用以提高稳定性。</li>
+</ul>
+</li>
+</ul>
+<h1 id="物理参数方案的选择"><a href="#物理参数方案的选择" class="headerlink" title="物理参数方案的选择"></a>物理参数方案的选择</h1><p>参考该网站对各种参数化方案的介绍，选择适当的参数化方案。</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www2.mmm.ucar.edu/wrf/users/physics/phys_references.html">WRF 模型物理参考 (ucar.edu)</a></p>
+<h1 id="多尺度模式的物理参数化"><a href="#多尺度模式的物理参数化" class="headerlink" title="多尺度模式的物理参数化"></a>多尺度模式的物理参数化</h1><h2 id="网格大小和积云参数化"><a href="#网格大小和积云参数化" class="headerlink" title="网格大小和积云参数化"></a>网格大小和积云参数化</h2><ul>
+<li><strong>dx &gt; 10km</strong>：可以使用积云参数化方案</li>
+<li><strong>dx &lt; 4km</strong>：通常不需要积云参数化方案</li>
+<li><strong>灰区：5-10km</strong>：没有达成共识，可以尝试使用尺度感知积云方案，如GF、MSKF。</li>
+</ul>
+<h2 id="网格大小和微物理方案"><a href="#网格大小和微物理方案" class="headerlink" title="网格大小和微物理方案"></a>网格大小和微物理方案</h2><ul>
+<li><strong>对于 DX &gt; 10 km</strong>：不要使用复杂的微物理方案</li>
+<li><strong>对于 DX &lt; 4km（对流解析）</strong>：需要至少含霰的微物理方案</li>
+</ul>
+<h2 id="网格大小和PBL"><a href="#网格大小和PBL" class="headerlink" title="网格大小和PBL"></a>网格大小和PBL</h2><ul>
+<li>PBL假定所有的湍涡都是不解析的</li>
+<li><strong>对于 DX &gt; 500m</strong>：PBL需要激活</li>
+<li>LES假定所有的湍涡是完美解析的</li>
+<li><strong>对于 DX &lt; 100m</strong>：LES应该被采用</li>
+<li><strong>对于 DX 100-500m</strong>：在一些程度下任意一种都可以</li>
+</ul>
 
 </article>
     
@@ -341,10 +416,9 @@
         </h5>
     </div>
     
-    
         <div class="col-lg-6">
     <div class="trm-blog-card trm-scroll-animation">
-        <a href="/2025/11/05/test-numeric/" class="trm-cover-frame trm-anima-link">
+        <a href="/2025/11/05/%E6%96%87%E7%AB%A0%E7%A4%BA%E4%BE%8B/" class="trm-cover-frame trm-anima-link">
             
             
                 <img alt="cover" class="no-fancybox" src="/img/block.jpg">
@@ -353,19 +427,51 @@
         
         <div class="trm-card-descr">
             <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/Test-Category/">
-                    Test Category
+                <a href=" /categories/%E6%B5%8B%E8%AF%95%E5%88%86%E7%B1%BB/">
+                    测试分类
                 </a>
             </div>
             <h5>
-                <a href="/2025/11/05/test-numeric/" class="trm-anima-link">
-                    Test Article 123
+                <a href="/2025/11/05/%E6%96%87%E7%AB%A0%E7%A4%BA%E4%BE%8B/" class="trm-anima-link">
+                    新的中文测试文章
                 </a>
             </h5>
             <div class="trm-divider trm-mb-20 trm-mt-20"></div>
             <ul class="trm-card-data trm-label">
                 <li>25/11/05</li>
-                <li>21:00</li>
+                <li>22:00</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2025/11/05/%E5%9B%BE%E7%89%87%E7%A4%BA%E4%BE%8B/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/image1.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/%E4%BD%9C%E5%93%81/">
+                    作品
+                </a>
+            </div>
+            <h5>
+                <a href="/2025/11/05/%E5%9B%BE%E7%89%87%E7%A4%BA%E4%BE%8B/" class="trm-anima-link">
+                    我的摄影作品
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/11/05</li>
+                <li>00:00</li>
                 
                 
             </ul>
@@ -411,8 +517,6 @@
   <span id="busuanzi_container_site_pv">本站总访问量：<span id="busuanzi_value_site_pv"></span>次</span>
   <span style="margin: 0 10px;">|</span>
   <span id="busuanzi_container_site_uv">本站访客数：<span id="busuanzi_value_site_uv"></span>人</span>
-  <span style="margin: 0 10px;">|</span>
-  <span id="busuanzi_container_online">在线人数：<span id="busuanzi_value_online"></span>人</span>
 </div>
 
         </div>
