@@ -327,9 +327,9 @@
 <div class="trm-card ">
     <article id="article-container" class="trm-publication">
     <h1 id="WRF的运行"><a href="#WRF的运行" class="headerlink" title="WRF的运行"></a>WRF的运行</h1><p><img src="/img/wrf-run-process.png" alt="WRF运行流程图"  data-tag='post-image' onload='this.onload=null;this.style.opacity=1;' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
-<h2 id="地形准备"><a href="#地形准备" class="headerlink" title="地形准备"></a>地形准备</h2><p>下载网址：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www2.mmm.ucar.edu/wrf/users/download/get_sources_wps_geog.html">WRF静态地形数据</a></p>
+<h2 id="地形准备"><a href="#地形准备" class="headerlink" title="地形准备"></a>地形准备</h2><p>下载网址：<a target="_blank" rel="noopener" href="https://www2.mmm.ucar.edu/wrf/users/download/get_sources_wps_geog.html">WRF静态地形数据</a></p>
 <h2 id="完整运行步骤"><a href="#完整运行步骤" class="headerlink" title="完整运行步骤"></a>完整运行步骤</h2><h3 id="Step-1-FNL准备"><a href="#Step-1-FNL准备" class="headerlink" title="Step 1: FNL准备"></a>Step 1: FNL准备</h3><ol>
-<li><p>初始和强迫场文件用的是FNL文件，FNL文件可在官方网站：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://rda.ucar.edu/datasets/ds083.2/">https://rda.ucar.edu/datasets/ds083.2/</a>（需要注册），或使用python下载文件</p>
+<li><p>初始和强迫场文件用的是FNL文件，FNL文件可在官方网站：<a target="_blank" rel="noopener" href="https://rda.ucar.edu/datasets/ds083.2/">https://rda.ucar.edu/datasets/ds083.2/</a>（需要注册），或使用python下载文件</p>
 </li>
 <li><p>WPS文件夹内需要有Vtable文件，一般用的是Vtable.GFS，复制到WPS文件下改为Vtable，该文件位置在WPS/ungrib/Variable_Tables/。</p>
 </li>
@@ -338,11 +338,11 @@
 <h3 id="Step-2-文件的修改"><a href="#Step-2-文件的修改" class="headerlink" title="Step 2: 文件的修改"></a>Step 2: 文件的修改</h3><p>运行之前需要更改两份文件的内容，一个是namelist.wps，另一个是namelist.input。</p>
 <h4 id="namelist-wps"><a href="#namelist-wps" class="headerlink" title="namelist.wps:"></a>namelist.wps:</h4><ul>
 <li>位置：WPS/namelist.wps</li>
-<li>详细介绍：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www2.mmm.ucar.edu/wrf/users/namelist_best_prac_wps.html">WPS namelist最佳实践</a></li>
+<li>详细介绍：<a target="_blank" rel="noopener" href="https://www2.mmm.ucar.edu/wrf/users/namelist_best_prac_wps.html">WPS namelist最佳实践</a></li>
 </ul>
 <h4 id="namelist-input："><a href="#namelist-input：" class="headerlink" title="namelist.input："></a>namelist.input：</h4><ul>
 <li>位置：WRF/test/em_real/namelist.input</li>
-<li>详细介绍：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www2.mmm.ucar.edu/wrf/users/namelist_best_prac_wrf.html">WRF namelist最佳实践</a></li>
+<li>详细介绍：<a target="_blank" rel="noopener" href="https://www2.mmm.ucar.edu/wrf/users/namelist_best_prac_wrf.html">WRF namelist最佳实践</a></li>
 </ul>
 <h3 id="Step-3-WPS运行"><a href="#Step-3-WPS运行" class="headerlink" title="Step 3: WPS运行"></a>Step 3: WPS运行</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">定义模拟域，并将各种地面数据集插入模型网格</span></span><br><span class="line">./geogrid.exe</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">链接FNL数据</span></span><br><span class="line">./link_grib.csh path_to_data</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">读取 GRIB 文件，<span class="string">"degribs"</span>数据，并以称为中间格式的简单格式写入数据</span></span><br><span class="line">./ungrib.exe</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将 ungrib 程序提取的中间格式气象数据水平插值到 geogrid 程序定义的模拟域中</span></span><br><span class="line">./metgrid.exe</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="Step-4-WRF运行"><a href="#Step-4-WRF运行" class="headerlink" title="Step 4: WRF运行"></a>Step 4: WRF运行</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">链接WPS处理的文件</span></span><br><span class="line">ln -sf ../../WPS/met_em.d* .</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">产生初始场文件和边界场文件</span></span><br><span class="line">./real.exe</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">运行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意：这里使用的是单核运行，如有需要可多核多线程</span></span><br><span class="line">./wrf.exe</span><br></pre></td></tr></tbody></table></figure>
@@ -404,6 +404,38 @@
     
         <div class="col-lg-6">
     <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2025/11/05/WRF%E5%9F%BA%E7%A1%80%20_%20WRF%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/wrf.png">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/WRF/">
+                    WRF
+                </a>
+            </div>
+            <h5>
+                <a href="/2025/11/05/WRF%E5%9F%BA%E7%A1%80%20_%20WRF%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85/" class="trm-anima-link">
+                    WRF基础 | WRF库的安装
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/11/05</li>
+                <li>22:00</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
         <a href="/2025/11/05/WRF%E5%9F%BA%E7%A1%80%20_%20%E5%A6%82%E4%BD%95%E6%A8%A1%E6%8B%9F%E5%87%BA%E6%9B%B4%E5%A5%BD%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%9F/" class="trm-cover-frame trm-anima-link">
             
             
@@ -426,38 +458,6 @@
             <ul class="trm-card-data trm-label">
                 <li>25/11/05</li>
                 <li>22:00</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation">
-        <a href="/2025/11/05/%E5%9B%BE%E7%89%87%E7%A4%BA%E4%BE%8B/" class="trm-cover-frame trm-anima-link">
-            
-            
-                <img alt="cover" class="no-fancybox" src="/img/image1.jpg">
-            
-        </a>
-        
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/%E4%BD%9C%E5%93%81/">
-                    作品
-                </a>
-            </div>
-            <h5>
-                <a href="/2025/11/05/%E5%9B%BE%E7%89%87%E7%A4%BA%E4%BE%8B/" class="trm-anima-link">
-                    我的摄影作品
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>25/11/05</li>
-                <li>00:00</li>
                 
                 
             </ul>

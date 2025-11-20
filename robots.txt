@@ -2,21 +2,6 @@
 # 允许所有搜索引擎抓取网站内容
 
 User-agent: *
-Allow: /
-
-# 允许抓取的内容
-Allow: /posts/
-Allow: /archives/
-Allow: /categories/
-Allow: /tags/
-
-# 禁止抓取的内容
-Disallow: /js/
-Disallow: /css/
-Disallow: /images/
-Disallow: /fonts/
-Disallow: /lib/
-Disallow: /fancybox/
-
+Disallow:
 # 网站地图
 Sitemap: https://166345.xyz/sitemap.xml
