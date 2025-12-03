@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>导航页</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background:none;color:#fff}
+    body::before{content:"";position:fixed;inset:0;background:var(--wallpaper) center/cover no-repeat;z-index:-1}
+    .page{min-height:100%;display:flex;flex-direction:column}
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:transparent}
+    .hero::before{content:none}
+    .hero::after{content:none}
+    .hero-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:18px}
+    .title{font-size:20px;letter-spacing:.4px;color:#cfe3ff}
+    .clock{display:flex;flex-direction:column;align-items:center}
+    .time{font-variant-numeric:tabular-nums;letter-spacing:1px;font-weight:800}
+    .time{font-size:72px}
+    @media (min-width:768px){.time{font-size:92px}}
+    .date{margin-top:4px;font-size:16px;color:#b7c6e3}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .btn{appearance:none;border:none;cursor:pointer;background:#1a2240;color:#e7efff;padding:10px 14px;border-radius:10px;font-weight:600}
+    .btn:focus-visible{outline:2px solid #6da2ff;outline-offset:2px}
+    .btn.secondary{background:#243061;color:#cfe3ff}
+    .add-menu{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .widgets{position:relative;width:100vw;min-height:480px;margin-top:12px;overflow:visible;z-index:1}
+    .widget-card{position:absolute;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px)}
+    .widget-title{font-weight:700;color:#e7efff}
+    .widget-actions{position:absolute;top:8px;right:8px;display:flex;gap:6px;z-index:2}
+    .widget-card[draggable=true]{cursor:move}
+    .search{display:flex;align-items:center;gap:10px}
+    .select{background:#0b122b;color:#e7efff;border:1px solid #1e2647;border-radius:10px;padding:8px}
+    .calendar{display:flex;flex-direction:column;gap:8px}
+    .calendar-head{display:flex;align-items:center;gap:8px;color:#cfe3ff;font-weight:700}
+    .calendar-grid{display:grid;grid-template-columns:repeat(7,28px);gap:6px}
+    .cal-cell{width:28px;height:28px;display:grid;place-items:center;border-radius:8px;background:rgba(255,255,255,.06);color:#e7efff;font-size:12px}
+    .cal-cell.mute{opacity:.5}
+    .cal-cell.today{background:#2a3d7a}
+    .content{flex:1;width:100vw;margin:0;padding:18px 0 36px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin:8px 0 12px}
+    .section-title{font-size:18px;color:#cfe3ff}
+    .grid{position:relative;width:100vw;min-height:600px;overflow:visible;z-index:2}
+    .tile{position:absolute;display:flex;flex-direction:column;align-items:center;gap:12px;padding:18px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);box-shadow:0 10px 28px rgba(0,0,0,.28);backdrop-filter:blur(8px);transition:.2s;touch-action:none;user-select:none;z-index:2}
+    .tile:hover{border-color:rgba(255,255,255,.28);transform:translateY(-2px)}
+    .guides{position:fixed;inset:0;pointer-events:none;z-index:9999}
+    .guide-x{position:fixed;left:0;top:0;width:100vw;height:1px;background:rgba(109,162,255,.8);transform:translateY(-10000px);pointer-events:none}
+    .guide-y{position:fixed;left:0;top:0;width:1px;height:100vh;background:rgba(109,162,255,.8);transform:translateX(-10000px);pointer-events:none}
+    .favicon{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#2a3d7a,#162044);display:grid;place-items:center;overflow:hidden}
+    .favicon img{width:100%;height:100%;object-fit:cover}
+    .tile-title{max-width:100%;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e7efff}
+    .tile-actions{position:absolute;top:8px;right:8px;display:flex;gap:6px;z-index:1000}
+    .icon-btn{appearance:none;border:none;background:#1a2240;color:#cfe3ff;width:30px;height:30px;border-radius:8px;cursor:pointer}
+    .modal{position:fixed;inset:0;background:rgba(3,7,18,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+    .modal.show{display:flex}
+    .card{width:100%;max-width:520px;background:#0f152f;border:1px solid #1e2647;border-radius:14px;padding:16px}
+    .field{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+    .field label{color:#cfe3ff;font-size:14px}
+    .input{background:#0b122b;color:#e7efff;border:1px solid #1e2647;border-radius:10px;padding:10px}
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+    .hidden{display:none}
+    footer{opacity:.8;text-align:center;padding:16px;font-size:13px;color:#8fa6d9}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="hero" id="hero">
+    <div class="hero-inner">
+      <div class="title">沐室</div>
+      <div class="clock">
+        <div class="time" id="time">00:00</div>
+        <div class="date" id="date">1970-01-01 星期四</div>
+      </div>
+      <div class="toolbar">
+        <button class="btn" id="btnUploadCover">上传封面</button>
+        <input type="file" id="coverInput" accept="image/*" class="hidden">
+        <button class="btn secondary" id="btnResetCover">恢复默认封面</button>
+        
+        <button class="btn" id="btnAdd">添加</button>
+        <button class="btn secondary" id="btnEditToggle">编辑模式</button>
+        <button class="btn secondary" id="btnClearAll">清空所有链接</button>
+      </div>
+      <div class="add-menu hidden" id="addMenu">
+        <button class="btn" id="btnAddLinkSub">添加链接</button>
+        <button class="btn" id="btnAddSearchSub">添加搜索框</button>
+        <button class="btn secondary" id="btnAddWeatherSub">添加天气</button>
+        <button class="btn secondary" id="btnAddCalendarSub">添加日历</button>
+      </div>
+      <div class="widgets" id="widgets"></div>
+    </div>
+  </header>
+  <main class="content">
+    <div class="grid" id="grid"></div>
+  </main>
+  <footer>本页数据保存在浏览器本地，支持图标与封面自定义</footer>
+  </div>
+
+  <div class="guides" id="guides">
+    <div class="guide-x" id="guideY"></div>
+    <div class="guide-y" id="guideX"></div>
+  </div>
+
+  <div class="modal" id="linkModal">
+    <div class="card">
+      <div style="font-weight:700;color:#e7efff;font-size:16px">添加链接</div>
+      <div class="field">
+        <label for="linkName">名称</label>
+        <input class="input" id="linkName" placeholder="例如：知乎">
+      </div>
+      <div class="field">
+        <label for="linkUrl">网址</label>
+        <input class="input" id="linkUrl" placeholder="例如：https://www.zhihu.com">
+      </div>
+      <div class="field">
+        <label>自定义图标（可选）</label>
+        <input type="file" id="iconInput" accept="image/*">
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="btnCancel">取消</button>
+        <button class="btn" id="btnSave">保存</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const STATE_KEY = 'start.links.v1';
+const COVER_KEY = 'start.cover.v1';
+const WIDGETS_KEY = 'start.widgets.v1';
+const edit = {on:false};
+const grid = document.getElementById('grid');
+const timeEl = document.getElementById('time');
+const dateEl = document.getElementById('date');
+const hero = document.getElementById('hero');
+const btnUploadCover = document.getElementById('btnUploadCover');
+const coverInput = document.getElementById('coverInput');
+const btnResetCover = document.getElementById('btnResetCover');
+const btnAdd = document.getElementById('btnAdd');
+const addMenu = document.getElementById('addMenu');
+const btnAddLinkSub = document.getElementById('btnAddLinkSub');
+const btnAddSearchSub = document.getElementById('btnAddSearchSub');
+const btnAddWeatherSub = document.getElementById('btnAddWeatherSub');
+const btnAddCalendarSub = document.getElementById('btnAddCalendarSub');
+const btnEditToggle = document.getElementById('btnEditToggle');
+const btnClearAll = document.getElementById('btnClearAll');
+const modal = document.getElementById('linkModal');
+const linkName = document.getElementById('linkName');
+const linkUrl = document.getElementById('linkUrl');
+const iconInput = document.getElementById('iconInput');
+const btnCancel = document.getElementById('btnCancel');
+const btnSave = document.getElementById('btnSave');
+const widgetsEl = document.getElementById('widgets');
+let dndInit=false;
+const guideX = document.getElementById('guideX');
+const guideY = document.getElementById('guideY');
+
+function fmtTime(){
+  const d=new Date();
+  const hh=String(d.getHours()).padStart(2,'0');
+  const mm=String(d.getMinutes()).padStart(2,'0');
+  const ss=String(d.getSeconds()).padStart(2,'0');
+  timeEl.textContent=`${hh}:${mm}`;
+  dateEl.textContent=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][d.getDay()]} ${ss}`;
+}
+
+function loadCover(){
+  const url=localStorage.getItem(COVER_KEY);
+  if(url){
+    hero.style.setProperty('--cover',`url(${url})`);
+    document.body.style.setProperty('--wallpaper',`url(${url})`);
+  }else{
+    document.body.style.setProperty('--wallpaper',`url('/img/banner.png')`);
+  }
+}
+
+function readFile(input){
+  return new Promise((resolve,reject)=>{
+    const f=input.files && input.files[0];
+    if(!f){resolve(null);return}
+    const r=new FileReader();
+    r.onload=e=>resolve(e.target.result);
+    r.onerror=reject;
+    r.readAsDataURL(f);
+  });
+}
+
+function domainIcon(url){
+  try{
+    const u=new URL(url);
+    return `https://icons.duckduckgo.com/ip3/${u.hostname}.ico`;
+  }catch(e){
+    return '';
+  }
+}
+
+function loadLinks(){
+  try{
+    const raw=localStorage.getItem(STATE_KEY);
+    return raw?JSON.parse(raw):[];
+  }catch(e){
+    return [];
+  }
+}
+
+function saveLinks(list){
+  localStorage.setItem(STATE_KEY,JSON.stringify(list));
+}
+
+function loadWidgets(){
+  try{
+    const raw=localStorage.getItem(WIDGETS_KEY);
+    const cfg= raw?JSON.parse(raw):{search:false,weather:false,calendar:false,engine:'baidu',order:[],pos:{}};
+    if(!Array.isArray(cfg.order)) cfg.order=[];
+    if(!cfg.pos) cfg.pos={};
+    return cfg;
+  }catch(e){
+    return {search:false,weather:false,calendar:false,engine:'baidu',order:[],pos:{}};
+  }
+}
+
+function saveWidgets(cfg){
+  localStorage.setItem(WIDGETS_KEY,JSON.stringify(cfg));
+}
+
+const addLinkMove=(tile,item,idx)=>{
+    const onDown=(e)=>{
+      if(!edit.on) return;
+      if(e.target.closest('.tile-actions')) return;
+      if(e.target.tagName==='INPUT' || e.target.tagName==='BUTTON' || e.target.tagName==='SELECT') return;
+      let containerRect=grid.getBoundingClientRect();
+      const rect=tile.getBoundingClientRect();
+      const startX=e.clientX; const startY=e.clientY;
+      const offsetX=startX-rect.left; const offsetY=startY-rect.top;
+      e.preventDefault();
+      tile.style.zIndex='1000';
+      guideX.style.display='block';
+      guideY.style.display='block';
+      const onMove=(ev)=>{
+        containerRect=grid.getBoundingClientRect();
+        const x=ev.clientX - containerRect.left - offsetX;
+        const y=ev.clientY - containerRect.top - offsetY;
+        let nx=x; let ny=y;
+        const step=12;
+        nx=Math.round(nx/step)*step; ny=Math.round(ny/step)*step;
+        tile.style.left=nx+"px";
+        tile.style.top=ny+"px";
+        guideX.style.transform=`translateX(${containerRect.left+nx}px)`;
+        guideY.style.transform=`translateY(${containerRect.top+ny}px)`;
+        const bottom=ny+rect.height; if(bottom>grid.offsetHeight){ grid.style.height=(bottom+32)+'px'; }
+      };
+      const onUp=()=>{
+        window.removeEventListener('mousemove',onMove);
+        window.removeEventListener('mouseup',onUp);
+        tile.style.zIndex='';
+        guideX.style.display='none';
+        guideY.style.display='none';
+        const list3=loadLinks();
+        const left=parseFloat(tile.style.left||'0')||0;
+        const top=parseFloat(tile.style.top||'0')||0;
+        const id = item.id;
+        const i = list3.findIndex(x=>x && x.id===id);
+        if(i>=0){ list3[i].pos={x:left,y:top}; saveLinks(list3); }
+      };
+      window.addEventListener('mousemove',onMove);
+      window.addEventListener('mouseup',onUp);
+    };
+    tile.addEventListener('mousedown',(e)=>{ onDown(e); });
+};
+
+function render(){
+  const list=loadLinks();
+  let changed=false;
+  const taken=new Set((list||[]).map(x=>x&&x.id).filter(Boolean));
+  (list||[]).forEach((x)=>{
+    if(x && !x.id){
+      let id;
+      do{ id=Date.now().toString(36)+Math.random().toString(36).slice(2,7); }while(taken.has(id));
+      x.id=id;
+      taken.add(id);
+      changed=true;
+    }
+  });
+  if(changed) saveLinks(list);
+  const toShow=list;
+  grid.innerHTML='';
+  toShow.forEach((item,idx)=>{
+    const tile=document.createElement('div');
+    tile.className='tile';
+    tile.setAttribute('draggable','false');
+    tile.addEventListener('dragstart',(e)=>{e.preventDefault();});
+    const hue=(function(s){let h=0;for(let i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0;}return h%360;})(item.url||item.name||'');
+    tile.style.background=`linear-gradient(135deg, hsla(${hue},70%,60%,.12), hsla(${(hue+25)%360},70%,50%,.18))`;
+    tile.style.borderColor=`hsla(${hue},70%,60%,.35)`;
+    const fav=document.createElement('div');
+    fav.className='favicon';
+    fav.style.background=`linear-gradient(135deg, hsla(${hue},70%,55%,.35), hsla(${(hue+20)%360},70%,45%,.35))`;
+    fav.setAttribute('draggable','false');
+    fav.addEventListener('dragstart',(e)=>{e.preventDefault();});
+    const img=document.createElement('img');
+    img.referrerPolicy='no-referrer';
+    img.draggable=false;
+    img.src=item.icon||domainIcon(item.url);
+    img.onerror=()=>{
+      fav.textContent=(item.name||item.url||'?').slice(0,1).toUpperCase();
+      fav.style.fontWeight='800';
+      fav.style.color='#fff';
+    };
+    fav.appendChild(img);
+    const t=document.createElement('div');
+    t.className='tile-title';
+    t.textContent=item.name||item.url;
+    const actions=document.createElement('div');
+    actions.className='tile-actions';
+    const del=document.createElement('button');
+    del.className='icon-btn';
+    del.textContent='×';
+    del.title='删除';
+    del.onclick=(e)=>{
+      e.stopPropagation();
+      const list2=loadLinks();
+      const id = item.id;
+      const i = list2.findIndex(x=>x && x.id===id);
+      if(i>=0){
+        list2.splice(i,1);
+        saveLinks(list2);
+        del.closest('.tile').remove();
+      }
+    };
+    actions.appendChild(del);
+    if(!edit.on) actions.style.display='none';
+    tile.appendChild(actions);
+    tile.appendChild(fav);
+    tile.appendChild(t);
+    const p=item.pos || {x:16,y:idx*120};
+    tile.dataset.id = item.id || String(idx);
+    tile.style.left=p.x+"px";
+    tile.style.top=p.y+"px";
+    addLinkMove(tile, item, idx);
+    tile.onclick=()=>{ if(!edit.on) window.open(item.url,'_blank'); };
+    grid.appendChild(tile);
+  });
+  const tiles=Array.from(grid.querySelectorAll('.tile'));
+  let maxBottom=0;
+  tiles.forEach(el=>{ const top=parseFloat(el.style.top||'0')||0; maxBottom=Math.max(maxBottom, top + el.offsetHeight); });
+  if(maxBottom>0){ grid.style.height=(Math.max(600, maxBottom+16))+'px'; }
+}
+
+function renderWidgets(){
+  const cfg=loadWidgets();
+  if(!Array.isArray(cfg.order)) cfg.order=[];
+  widgetsEl.innerHTML='';
+  const keys = ['search','weather','calendar'].filter(k=>cfg[k]);
+  const addMove=(card)=>{
+    const key=card.dataset.key;
+    const onDown=(e)=>{
+      if(!edit.on) return;
+      if(e.target.closest('.widget-actions')) return;
+      if(e.target.tagName==='SELECT' || e.target.tagName==='INPUT' || e.target.tagName==='BUTTON') return;
+      let containerRect=widgetsEl.getBoundingClientRect();
+      const startX=e.clientX; const startY=e.clientY;
+      const rect=card.getBoundingClientRect();
+      const offsetX=startX-rect.left; const offsetY=startY-rect.top;
+      e.preventDefault();
+      guideX.style.display='block';
+      guideY.style.display='block';
+      const onMove=(ev)=>{
+        containerRect=widgetsEl.getBoundingClientRect();
+        const x=ev.clientX - containerRect.left - offsetX;
+        const y=ev.clientY - containerRect.top - offsetY;
+        let nx=x; let ny=y;
+        const step=12;
+        nx=Math.round(nx/step)*step; ny=Math.round(ny/step)*step;
+        card.style.left=nx+"px"; card.style.top=ny+"px";
+        guideX.style.transform=`translateX(${containerRect.left+nx}px)`;
+        guideY.style.transform=`translateY(${containerRect.top+ny}px)`;
+        const bottom=ny+rect.height; if(bottom>widgetsEl.offsetHeight){ widgetsEl.style.height=(bottom+32)+'px'; }
+      };
+      const onUp=()=>{
+        window.removeEventListener('mousemove',onMove);
+        window.removeEventListener('mouseup',onUp);
+        guideX.style.display='none';
+        guideY.style.display='none';
+        const c=loadWidgets();
+        const left=parseFloat(card.style.left||'0')||0;
+        const top=parseFloat(card.style.top||'0')||0;
+        c.pos[key]={x:left,y:top};
+        saveWidgets(c);
+      };
+      window.addEventListener('mousemove',onMove);
+      window.addEventListener('mouseup',onUp);
+    };
+    card.addEventListener('mousedown',(e)=>{ onDown(e); });
+  };
+
+  const makeSearch=()=>{
+    const card=document.createElement('div');
+    card.className='widget-card';
+    card.dataset.key='search';
+    card.setAttribute('draggable','false');
+    card.addEventListener('dragstart',(e)=>{e.preventDefault();});
+    const actions=document.createElement('div');
+    actions.className='widget-actions';
+    const del=document.createElement('button');
+    del.className='icon-btn';
+    del.textContent='×';
+    del.title='删除';
+    del.onclick=(e)=>{e.stopPropagation();const c=loadWidgets();c.search=false;delete c.pos.search;saveWidgets(c);del.closest('.widget-card').remove();};
+    actions.appendChild(del);
+    if(!edit.on) actions.style.display='none';
+    const title=document.createElement('div');
+    title.className='widget-title';
+    title.textContent='搜索';
+    const box=document.createElement('div');
+    box.className='search';
+    const select=document.createElement('select');
+    select.className='select';
+    [['baidu','百度'],['bing','Bing'],['ddg','DuckDuckGo'],['google','Google']].forEach(([v,l])=>{const o=document.createElement('option');o.value=v;o.textContent=l;select.appendChild(o);});
+    select.value=cfg.engine||'baidu';
+    select.onchange=()=>{const c=loadWidgets();c.engine=select.value;saveWidgets(c);} ;
+    const input=document.createElement('input');
+    input.className='input';
+    input.placeholder='输入搜索内容，回车';
+    input.onkeydown=(e)=>{if(e.key==='Enter'){const q=encodeURIComponent(input.value.trim());if(!q) return;const eng=(loadWidgets().engine)||'baidu';const map={baidu:'https://www.baidu.com/s?wd=',bing:'https://www.bing.com/search?q=',ddg:'https://duckduckgo.com/?q=',google:'https://www.google.com/search?q='};window.open(map[eng]+q,'_blank');}};
+    card.appendChild(actions);
+    card.appendChild(title);
+    box.appendChild(select);
+    box.appendChild(input);
+    card.appendChild(box);
+    const p=cfg.pos.search || {x:16,y:0};
+    card.style.left=p.x+"px"; card.style.top=p.y+"px";
+    addMove(card);
+    widgetsEl.appendChild(card);
+  };
+  const makeWeather=()=>{
+    const card=document.createElement('div');
+    card.className='widget-card';
+    card.dataset.key='weather';
+    card.setAttribute('draggable','false');
+    card.addEventListener('dragstart',(e)=>{e.preventDefault();});
+    const actions=document.createElement('div');
+    actions.className='widget-actions';
+    const del=document.createElement('button');
+    del.className='icon-btn';
+    del.textContent='×';
+    del.title='删除';
+    del.onclick=(e)=>{e.stopPropagation();const c=loadWidgets();c.weather=false;delete c.pos.weather;saveWidgets(c);del.closest('.widget-card').remove();};
+    actions.appendChild(del);
+    if(!edit.on) actions.style.display='none';
+    const title=document.createElement('div');
+    title.className='widget-title';
+    title.textContent='天气';
+    const info=document.createElement('div');
+    info.style.color='#e7efff';
+    info.textContent='定位中…';
+    card.appendChild(actions);
+    card.appendChild(title);
+    card.appendChild(info);
+    const p=cfg.pos.weather || {x:16,y:110};
+    card.style.left=p.x+"px"; card.style.top=p.y+"px";
+    addMove(card);
+    widgetsEl.appendChild(card);
+    const load=async(lat,lon)=>{
+      try{
+        const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`;
+        const r=await fetch(url);
+        const j=await r.json();
+        const w=j.current||{};
+        const map={0:'晴',1:'晴',2:'多云',3:'多云',45:'雾',48:'雾',51:'毛毛雨',53:'毛毛雨',55:'毛毛雨',61:'小雨',63:'雨',65:'大雨',71:'小雪',73:'雪',75:'大雪',80:'阵雨',81:'阵雨',82:'阵雨',95:'雷暴'};
+        info.textContent=`${Math.round(w.temperature_2m)}°C · ${map[w.weather_code]||'未知'}`;
+      }catch(e){info.textContent='获取失败';}
+    };
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(p=>load(p.coords.latitude,p.coords.longitude),()=>load(39.9042,116.4074),{timeout:5000});
+    }else{
+      load(39.9042,116.4074);
+    }
+  };
+  const makeCalendar=()=>{
+    const card=document.createElement('div');
+    card.className='widget-card';
+    card.dataset.key='calendar';
+    card.setAttribute('draggable','false');
+    card.addEventListener('dragstart',(e)=>{e.preventDefault();});
+    const actions=document.createElement('div');
+    actions.className='widget-actions';
+    const del=document.createElement('button');
+    del.className='icon-btn';
+    del.textContent='×';
+    del.title='删除';
+    del.onclick=(e)=>{e.stopPropagation();const c=loadWidgets();c.calendar=false;delete c.pos.calendar;saveWidgets(c);del.closest('.widget-card').remove();};
+    actions.appendChild(del);
+    if(!edit.on) actions.style.display='none';
+    const wrap=document.createElement('div');
+    wrap.className='calendar';
+    const head=document.createElement('div');
+    head.className='calendar-head';
+    const d=new Date();
+    head.textContent=`${d.getFullYear()}年${String(d.getMonth()+1).padStart(2,'0')}月`;
+    const grid=document.createElement('div');
+    grid.className='calendar-grid';
+    const first=new Date(d.getFullYear(),d.getMonth(),1);
+    const start=(first.getDay()+6)%7;
+    const days=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+    for(let i=0;i<start;i++){const c=document.createElement('div');c.className='cal-cell mute';c.textContent='';grid.appendChild(c);} 
+    for(let day=1;day<=days;day++){const c=document.createElement('div');c.className='cal-cell';c.textContent=String(day);if(day===d.getDate()) c.classList.add('today');grid.appendChild(c);} 
+    card.appendChild(actions);
+    wrap.appendChild(head);
+    wrap.appendChild(grid);
+    card.appendChild(wrap);
+    const p=cfg.pos.calendar || {x:16,y:220};
+    card.style.left=p.x+"px"; card.style.top=p.y+"px";
+    addMove(card);
+    widgetsEl.appendChild(card);
+  };
+  keys.forEach(k=>{ if(!cfg[k]) return; if(k==='search') makeSearch(); else if(k==='weather') makeWeather(); else if(k==='calendar') makeCalendar(); });
+
+  // 调整容器高度以适配绝对定位
+  const cards=Array.from(widgetsEl.querySelectorAll('.widget-card'));
+  let maxBottom=0;
+  cards.forEach(el=>{
+    const top=parseFloat(el.style.top||'0')||0;
+    maxBottom=Math.max(maxBottom, top + el.offsetHeight);
+  });
+  widgetsEl.style.height=(Math.max(320, maxBottom+16))+'px';
+}
+
+btnUploadCover.onclick=()=>coverInput.click();
+coverInput.onchange=async()=>{
+  const data=await readFile(coverInput);
+  if(data){
+    localStorage.setItem(COVER_KEY,data);
+    loadCover();
+  }
+  coverInput.value='';
+};
+
+btnResetCover.onclick=()=>{
+  localStorage.removeItem(COVER_KEY);
+  loadCover();
+};
+
+function openLinkModal(){
+  linkName.value='';
+  linkUrl.value='';
+  iconInput.value='';
+  modal.classList.add('show');
+}
+btnAdd.onclick=()=>{
+  addMenu.classList.toggle('hidden');
+};
+btnAddLinkSub.onclick=()=>{ openLinkModal(); addMenu.classList.add('hidden'); };
+
+btnCancel.onclick=()=>{
+  modal.classList.remove('show');
+};
+
+btnSave.onclick=async()=>{
+  const name=linkName.value.trim();
+  const url=linkUrl.value.trim();
+  if(!url){return}
+  const icon=await readFile(iconInput);
+  const list=loadLinks();
+  const ico = icon || domainIcon(url);
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+  list.push({id,name,url,icon:ico});
+  saveLinks(list);
+  modal.classList.remove('show');
+  render();
+};
+
+btnAddSearchSub.onclick=()=>{const c=loadWidgets();c.search=true;if(!c.order.includes('search')) c.order.push('search');saveWidgets(c);renderWidgets();addMenu.classList.add('hidden');};
+btnAddWeatherSub.onclick=()=>{const c=loadWidgets();c.weather=true;if(!c.order.includes('weather')) c.order.push('weather');saveWidgets(c);renderWidgets();addMenu.classList.add('hidden');};
+btnAddCalendarSub.onclick=()=>{const c=loadWidgets();c.calendar=true;if(!c.order.includes('calendar')) c.order.push('calendar');saveWidgets(c);renderWidgets();addMenu.classList.add('hidden');};
+
+btnEditToggle.onclick=()=>{
+  edit.on=!edit.on;
+  btnEditToggle.textContent=edit.on?"退出编辑":"编辑模式";
+  render();
+  renderWidgets();
+};
+
+btnClearAll.onclick=()=>{
+  if(confirm('确认清空所有链接？')){ localStorage.removeItem(STATE_KEY); render(); }
+};
+
+setInterval(fmtTime,1000);
+fmtTime();
+loadCover();
+render();
+renderWidgets();
+</script>
+</body>
+</html>
